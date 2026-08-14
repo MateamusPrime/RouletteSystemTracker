@@ -1,0 +1,25 @@
+node_modules/
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+
+# Local run artefacts
+*.log
+coverage/
+*.local
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Personal session backups exported from the app
+*-backup.json
+roulette-tracker-backup*.json
