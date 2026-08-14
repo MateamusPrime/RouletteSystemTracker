@@ -5,10 +5,28 @@ Real-time roulette session tracker that answers one question while you play:
 making the most money in THIS session?**
 
 Enter each spin as it lands. The app replays the full spin history through
-every combination (currently 25 placement systems × 9 money systems = 225
-combos), ranks them on a live leaderboard, and surfaces the best performer
+every combination of placement system and money system (1,430 of them in the
+current build), ranks them on a live leaderboard, and surfaces the best performer
 along with the exact bets it wants to place on the next spin — the same idea
 Regal Castle applies to baccarat, here for roulette.
+
+## What it looks like
+
+**Tracker.** Enter each spin on the felt as it lands. Every combination is re-simulated over the whole spin history and the leaderboard re-ranks live, alongside basic and advanced session statistics.
+
+![Tracker with a session in progress](docs/screenshots/01-tracker.png)
+
+**Leaderboard and honesty checks.** The board ranks every combination on profit, per-$100, trend, win-loss, win rate, max drawdown and whether it busted. Above it sit the parts that argue with the leaderboard: a significance bar that accounts for comparing a field this large at once, and a backtest of what following the board's own advice would actually have paid, including the bets you could not have afforded.
+
+![Combo leaderboard, significance check and follow-the-board backtest](docs/screenshots/02-leaderboard.png)
+
+**System Builder.** Build a system without writing code. Step systems are board-by-board state machines: place chips on a real felt, then decide where the machine goes based on how many of that step's bets won. Saved systems join the leaderboard instantly and are simulated exactly like the built-ins.
+
+![Step system builder with the chip-placement felt](docs/screenshots/03-builder.png)
+
+**Stress Test.** Race any combination, or the leaderboard's top five, over thousands of seeded reproducible spins to see the distribution of outcomes, how often it runs out of money, and how it compares against the house edge.
+
+![Stress test across simulated spins](docs/screenshots/04-stress.png)
 
 ## Run it
 
