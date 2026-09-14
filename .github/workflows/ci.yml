@@ -41,3 +41,9 @@ jobs:
 
       - name: Typecheck and build
         run: npm run build
+
+      # Rebuilds the standalone bundle from src/ and compares. The sync check
+      # above would pass happily if BOTH shipped files were stale; this is what
+      # catches that. Kept last because it is the slowest step.
+      - name: Check the standalone build is current with src
+        run: npm run check:standalone:fresh

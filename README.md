@@ -44,6 +44,7 @@ npm run dev               # http://localhost:5173
 npm run build             # hostable build in dist/
 npm run build:standalone  # regenerate the single-file version
 npm run check:standalone  # verify the two single-file builds agree
+npm run check:standalone:fresh  # verify the standalone build is current with src/
 npm test                  # domain test suite (Vitest)
 ```
 
@@ -66,8 +67,15 @@ means the standalone build was regenerated from changed source without
 re-baking — which would quietly ship a stale app to anyone opening the file
 this README points at. The fix is the two commands above.
 
-CI (`.github/workflows/ci.yml`) runs the test suite, the sync check and the
-build on every pull request and every push to `main`.
+Those two files agreeing is not the whole story: a source change that never
+gets rebuilt leaves them consistent with each other but both behind `src/`.
+`npm run check:standalone:fresh` rebuilds the standalone bundle into a throwaway
+directory and compares, so it never rewrites a committed file. Between them the
+two checks close the loop — the standalone matches source, and
+`RouletteTracker.html` matches the standalone, so both ship the current app.
+
+CI (`.github/workflows/ci.yml`) runs the test suite, both checks and the build
+on every pull request and every push to `main`.
 
 ## Features
 

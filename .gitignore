@@ -4,6 +4,9 @@ dist-ssr/
 build/
 *.tsbuildinfo
 
+# Throwaway rebuild used by check:standalone:fresh
+.standalone-check/
+
 # Local run artefacts
 *.log
 coverage/
