@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { injectSeed, escapeSeedJson } from './standalone-seed.mjs'
 
 /**
  * Bakes a backup into the standalone HTML so the file opens with the systems
@@ -39,7 +40,8 @@ const seedId = `seed:${backup.exportedAt ?? 'unknown'}`
 const seed = { sessions, customSystems: { placements, moneys }, seedId }
 
 // `</script>` inside a string would end the tag early; escaping < prevents it.
-const seedJson = JSON.stringify(seed).replace(/</g, '\\u003c')
+// It also keeps the seed's end marker unambiguous for the sync check.
+const seedJson = escapeSeedJson(JSON.stringify(seed))
 
 const bootstrap = `<script>(function(){
   try {
@@ -72,13 +74,12 @@ const bootstrap = `<script>(function(){
 
 const html = readFileSync(builtPath, 'utf8')
 // Seed before the app script runs, so the first render already sees the data.
-const marker = '<script'
-const at = html.indexOf(marker)
-if (at === -1) {
+const seeded = injectSeed(html, bootstrap)
+if (seeded === null) {
   console.error('Could not find a script tag to seed ahead of.')
   process.exit(1)
 }
-writeFileSync(outPath, html.slice(0, at) + bootstrap + html.slice(at), 'utf8')
+writeFileSync(outPath, seeded, 'utf8')
 
 const kb = Math.round(Buffer.byteLength(readFileSync(outPath)) / 1024)
 console.log(`Baked ${sessions.length} session(s), ${placements.length} placement system(s), ` +
