@@ -9,6 +9,7 @@
     "build:standalone": "tsc -b && vite build --mode standalone",
     "bake": "node scripts/bake-standalone.mjs",
     "check:standalone": "node scripts/check-standalone-sync.mjs",
+    "check:standalone:fresh": "node scripts/check-standalone-fresh.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"
