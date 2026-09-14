@@ -66,6 +66,9 @@ means the standalone build was regenerated from changed source without
 re-baking — which would quietly ship a stale app to anyone opening the file
 this README points at. The fix is the two commands above.
 
+CI (`.github/workflows/ci.yml`) runs the test suite, the sync check and the
+build on every pull request and every push to `main`.
+
 ## Features
 
 - **Manual spin entry** on a casino-felt number pad (European 0 or American 0/00 wheels)

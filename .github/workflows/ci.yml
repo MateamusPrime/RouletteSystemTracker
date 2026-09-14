@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A newer push supersedes the run in flight; only the latest commit matters.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Test and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Vite 7 needs ^20.19 || >=22.12; 22 is the current LTS line.
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      # Also runs at the end of `npm run build`. Kept as its own step so drift
+      # between the two shipped single-file builds is named in the checks list
+      # rather than buried in build output — it costs a few milliseconds.
+      - name: Check standalone builds are in sync
+        run: npm run check:standalone
+
+      - name: Typecheck and build
+        run: npm run build
