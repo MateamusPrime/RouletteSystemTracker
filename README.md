@@ -1,5 +1,7 @@
 # Roulette System Tracker
 
+[![CI](https://github.com/MateamusPrime/RouletteSystemTracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/MateamusPrime/RouletteSystemTracker/actions/workflows/ci.yml)
+
 Real-time roulette session tracker that answers one question while you play:
 **which combination of placement system × money management system would be
 making the most money in THIS session?**
