@@ -43,6 +43,7 @@ npm install
 npm run dev               # http://localhost:5173
 npm run build             # hostable build in dist/
 npm run build:standalone  # regenerate the single-file version
+npm run check:standalone  # verify the two single-file builds agree
 npm test                  # domain test suite (Vitest)
 ```
 
@@ -56,6 +57,14 @@ npm run bake -- path/to/roulette-tracker-backup.json
 
 The seed applies once, guarded by a marker in local storage, and merges by id —
 so it never overwrites newer work and never resurrects something deleted.
+
+`RouletteTracker.html` is exactly `standalone/index.html` with that seed baked
+in, so the two must always carry the same app code. `npm run check:standalone`
+lifts the seed back out and compares them byte for byte; it runs as part of
+`npm run build` and `npm test`, and fails the build if they have drifted. Drift
+means the standalone build was regenerated from changed source without
+re-baking — which would quietly ship a stale app to anyone opening the file
+this README points at. The fix is the two commands above.
 
 ## Features
 

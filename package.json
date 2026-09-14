@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && npm run check:standalone",
     "build:standalone": "tsc -b && vite build --mode standalone",
     "bake": "node scripts/bake-standalone.mjs",
+    "check:standalone": "node scripts/check-standalone-sync.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"
